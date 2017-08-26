@@ -4,13 +4,14 @@ in any messages that the bot receives and echos it back.
 """
 from flask import Flask, request
 from pymessenger.bot import Bot
+from os import environ
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = "41d2af30c9e81e3243cdbe58d73bc9bf"
+ACCESS_TOKEN = "EAAEygPWKlxQBAAfVMjE9Lx9dZAxysVTbQlQ3GVCQukz2HDFuptDkEW2FZBLKOuj1ZArZBpkQfoTxZB9BaLHsON2hE6bt2RW6ibvZAsZBJNw2lUE0PmKnG277wR9yueRGSUB98adgHBb8f7YjvikVZBiOtH1J70Kkz1CgIZCzE34AgkgZDZD"
+APP_SECRET = "ac3dd707db4f818e1c9f42db9d38ab94"
 VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
-
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -23,14 +24,17 @@ def hello():
 
     if request.method == 'POST':
         output = request.get_json()
+        print("message1")
         for event in output['entry']:
             messaging = event['messaging']
             for x in messaging:
                 if x.get('message'):
                     recipient_id = x['sender']['id']
+                    print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
                         bot.send_text_message(recipient_id, message)
+                        print(recipient_id + " " + message)
                     if x['message'].get('attachments'):
                         for att in x['message'].get('attachments'):
                             bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
@@ -40,4 +44,4 @@ def hello():
 
 
 if __name__ == "__main__":
-    app.run(port=40000, debug=True)
+    app.run(port=environ.get('PORT'), host='0.0.0.0')
