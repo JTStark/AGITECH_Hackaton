@@ -1,5 +1,6 @@
 import csv
 import ast
+import json
 
 ############### CONSTANTS ##################
 
@@ -18,6 +19,8 @@ example_child2 = [1235, 'Joao', 1236, [], initializing_state]
 example_father = [1236, 'Pedro', 0, [1234,1235], initializing_state]
 example_child_alone = [1238, 'Leonardo', 0, [], initializing_state]
 examples = [example_child1, example_child2, example_father, example_child_alone]
+
+json_example = '{\"Facebook_ID\":1232,\"name\":\"Augusto\",\"owner_ID"}'
 
 
 ############## CLASSES ##############
@@ -48,11 +51,11 @@ class Data_base:
 		self.file_name = name
 
 
-	def create(self):
+	def create(self, users):
 		with open(self.file_name, 'w') as arq:
 			arqCsv = csv.writer(arq)
 			arqCsv.writerow(header_db)
-			for user in examples:
+			for user in users:
 				arqCsv.writerow(user)
 
 
@@ -124,26 +127,38 @@ def get_parent(db, child_id):
 	except:
 		raise NameError('Child ID has no owner: ' + str(child_id))
 
-def get_children(db, owner_ID):
+def get_childs(db, owner_ID):
 	try:
 		owner_user = get_user_by_id(db, owner_ID)
 	except:
-		raise NameError('Owner ID not found: ' + str(owner_id))
+		raise NameError('Owner ID not found: ' + str(owner_ID))
 
 	
 	children_list = owner_user.childs_ID
 	if children_list == []:
 		raise NameError('Owner ID has no children: ' + str(owner_user.facebook_ID))
 	return [get_user_by_id(db, owner_ID_iterate) for owner_ID_iterate in children_list]
-	
 
-def check_relationship(db, child, parent):
+def get_child_by_name(db, owner_ID, name):
+	childs = get_childs(db, owner_ID)
+	for child in childs:
+		if child.name == name:
+			return child
+	raise NameError('The ID: ' + str(owner_ID) + ' has no children with name: ' + name)
+
+def add_user_to_db(db, user):
 	pass
+
+#Data is JSON
+def add_user(db, userData):
+	data = json.loads(userData)
+	#add_user_to_db(db, data)
+
 
 ############# MAIN ##############
 
 db = Data_base(db_folder + db_name)
 db.read()
 
-print get_children(db, 1236)[0].name
+add_user(db, '{\"name\":\"Augusto\"}')
 
