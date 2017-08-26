@@ -9,8 +9,9 @@ from os import environ
 app = Flask(__name__)
 
 ACCESS_TOKEN = "EAAGltGpexeYBAJ130ZCGq0NGZCLllmcXfLXrvponc2ZCRFRUI3ee4sDFBSpVPqrIUjZBbapBN1ZCi66nthAhKMBPZCEi6D"
+APP_SECRET = "ac3dd707db4f818e1c9f42db9d38ab94"
 VERIFY_TOKEN = "test_token"
-bot = Bot(ACCESS_TOKEN)
+bot = Bot(ACCESS_TOKEN, APP_SECRET)
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -33,7 +34,7 @@ def hello():
                     if x['message'].get('text'):
                         message = x['message']['text']
                         bot.send_text_message(recipient_id, message)
-                        print(message)
+                        print(recipient_id + " " + message)
                     if x['message'].get('attachments'):
                         for att in x['message'].get('attachments'):
                             bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
