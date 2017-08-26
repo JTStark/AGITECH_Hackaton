@@ -28,13 +28,10 @@ def hello():
             for x in messaging:
                 if x.get('message'):
                     recipient_id = x['sender']['id']
-                    print "GOT IT 1"
                     if x['message'].get('text'):
                         message = x['message']['text']
                         bot.send_text_message(recipient_id, message)
-                        print "GOT IT 2"
                     if x['message'].get('attachments'):
-                        print "GOT IT 3"
                         for att in x['message'].get('attachments'):
                             bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
                 else:
