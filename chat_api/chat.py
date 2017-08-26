@@ -9,7 +9,7 @@ from os import environ
 app = Flask(__name__)
 
 ACCESS_TOKEN = ""
-VERIFY_TOKEN = ""
+VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
 
 
