@@ -8,7 +8,7 @@ from os import environ
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = ""
+ACCESS_TOKEN = "EAAGltGpexeYBAJ130ZCGq0NGZCLllmcXfLXrvponc2ZCRFRUI3ee4sDFBSpVPqrIUjZBbapBN1ZCi66nthAhKMBPZCEi6D"
 VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
 
