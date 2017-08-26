@@ -23,14 +23,17 @@ def hello():
 
     if request.method == 'POST':
         output = request.get_json()
+        print("message1")
         for event in output['entry']:
             messaging = event['messaging']
             for x in messaging:
                 if x.get('message'):
                     recipient_id = x['sender']['id']
+                    print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
                         bot.send_text_message(recipient_id, message)
+                        print("message3")
                     if x['message'].get('attachments'):
                         for att in x['message'].get('attachments'):
                             bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
