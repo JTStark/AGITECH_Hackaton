@@ -11,6 +11,7 @@ def receive_message(userId, message):
 		db.set_user_state(userId, 'escolha')
 		return 'Operação cancelada. O que deseja fazer agora? Digite 1 para transferencia, 2 para saldo, 3 para extrato e 4 para boleto.'
 	elif(status == 'init'):
+		db.set_user_state(userId, 'escolha')
 		return 'Ola! O que gostaria de fazer? Digite \n1 para transferencia, \n2 para saldo, \n3 para extrato, \n4 para boleto e \n5 para receber.'
 	elif(status == 'escolha'):
 		if(message == '1'):	
@@ -48,12 +49,12 @@ def receive_message(userId, message):
 		try:
 			get_child_by_name(idUser, message)
 		except:
-			return 'Nome não encontrado. Por gentileza, digite o nome corretamente.'
+			return 'Nome não encontrado. Por gentileza, digite o nome corretamente. Pode ser também que você não tenha dependentes, então use cancelar para parar o procedimento atual.'
 		db.set_user_state(userId, 'transf3')
 		operacao['destino'] = message
 		db.set_user_dictionary(userId, str(operacao))
 	elif(status == 'extrato1'):
-		if(!(message.lower() in ['hoje', 'semana', 'mes'])):
+		if(not(message.lower() in ['hoje', 'semana', 'mes'])):
 			return 'A opção que você digitou não existe. Por favor, escolha entre hoje, semana ou mes.'
 		db.set_user_state(userId, 'extrato2')
 		operacao['periodo'] = message
@@ -68,7 +69,7 @@ def receive_message(userId, message):
 		db.set_user_dictionary(userId, '')
 		return operacao
 
-receive_message(1234, 'boleto1')
+print(receive_message(1236, 'Joao'))
 print(db.users)
 
 
