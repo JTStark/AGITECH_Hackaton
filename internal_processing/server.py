@@ -229,7 +229,9 @@ class Data_base:
 		self.update()
 
 	def update_user(self, user_update):
-		return 'nada'
+
+		self.users[3] = self.parse_user_to_list(user_update)
+		return
 		user_found = False
 		db_length = len(self.users)
 		init = 0
