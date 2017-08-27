@@ -34,10 +34,10 @@ def hello():
                     print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        elements = []
-                        element = Element(title="test", image_url="https://vignette4.wikia.nocookie.net/half-life/images/b/b9/Half-Life_3_logo.png/revision/latest/scale-to-width-down/220?cb=20160110005409&path-prefix=en", subtitle="subtitle", item_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-                        elements.append(element)
-                        bot.send_generic_message(recipient_id, elements)
+                        buttons = []
+                        button = Button(type:"web_url", url:"http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50", webview_height_ratio:"full",webview_share_button:"hide")
+                        buttons.append()
+                        result = bot.send_button_message(recipient_id, text, buttons)
                     else:
                         pass
         return "Success"
