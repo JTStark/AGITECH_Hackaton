@@ -49,9 +49,7 @@ def hello():
                         buttons.append(button)
                         text = 'Please select one of the options:'
                         result = bot.send_button_message(recipient_id, text, buttons)
-                        assert type(result) is dict
-                        assert result.get('message_id') is not None
-                        assert result.get('recipient_id') is not None
+                        print(result)
         return "Success"
 
 
