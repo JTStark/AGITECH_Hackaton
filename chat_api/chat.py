@@ -23,15 +23,11 @@ bot = Bot(ACCESS_TOKEN)
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
-
-
     if request.method == 'GET':
-        print("GOT A GET!!!")
-        print(request.args.get("source"))
-        #if request.args.get("hub.verify_token") == VERIFY_TOKEN:
-        #    return request.args.get("hub.challenge")
-        #else:
-        #    return 'Invalid verification token'
+        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
+            return request.args.get("hub.challenge")
+        else:
+            return 'Invalid verification token'
 
     if request.method == 'POST':
         output = request.get_json()
