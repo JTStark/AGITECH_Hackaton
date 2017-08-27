@@ -17,8 +17,13 @@ VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
 
 
-@app.route("/webhook", methods=['GET', 'POST'])
+@app.route("/webhook", methods=['PUT','GET', 'POST'])
 def hello():
+    if request.method == 'PUT':
+        output = request.args
+        print(output)
+        print("GOT A PUT")
+
     if request.method == 'GET':
         if request.args.get("hub.verify_token") == VERIFY_TOKEN:
             return request.args.get("hub.challenge")
@@ -34,15 +39,23 @@ def hello():
             for x in messaging:
                 if x.get('message'):
                     recipient_id = x['sender']['id']
-                    print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        buttons = []
-                        button = Button(type='postback', title='Button', payload="I GOT A PAYLOAD")
-                        buttons.append(button)
-                        text = 'Select'
-                        result = bot.send_button_message(recipient_id, text, buttons)
+                        answer = receive_message(recipient_id, message)
+                        bot.send_text_message(recipient_id, answer)
+                else:
+                    pass
         return "Success"
+
+def send_message(user_id, message):
+    bot.send_text_message(user_id, message)
+
+def initialize_payment_interface(user_id, amount):
+    buttons = []
+    button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Payment', webview_height_ratio='tall',webview_share_button='hide')
+    buttons.append(button)
+    text = 'Please click here to complete'
+    result = bot.send_button_message(recipient_id, text, buttons)
 
 
 if __name__ == "__main__":
