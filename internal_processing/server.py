@@ -109,6 +109,8 @@ class Data_base:
 
 	def get_user_by_id(self, user_id):
 
+		return self.create_user(0)
+
 		user_found = False
 		db_length = len(self.users)
 		init = 0
@@ -374,7 +376,7 @@ def run(server_class=HTTPServer, handler_class=S, port=80):
 
 #_thread.start_new_thread(run,())
 
-#db = Data_base(db_folder + db_name)
+db = Data_base(db_folder + db_name)
 
 #db.create(examples)
 #
@@ -382,7 +384,7 @@ def run(server_class=HTTPServer, handler_class=S, port=80):
 #	pass
 
 #user = db.create_user(2)
-#print(db.get_child_by_name(1236, 'Joao').name)
+#print(user.card.get_balance())
 #user.card.pay("123123", "123312 3123123 123 123 123123")
 
 #print(db.get_child_by_name(user.facebook_ID, 'joao'))
