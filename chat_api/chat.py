@@ -36,8 +36,9 @@ def hello():
                         elements = []
                         element = Element(title="test", image_url="https://vignette4.wikia.nocookie.net/half-life/images/b/b9/Half-Life_3_logo.png/revision/latest/scale-to-width-down/220?cb=20160110005409&path-prefix=en", subtitle="subtitle", item_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                         elements.append(element)
-                        bot.send_generic_message(recipient_id, elements)                else:
-                    pass
+                        bot.send_generic_message(recipient_id, elements)
+                    else:
+                        pass
         return "Success"
 
 
