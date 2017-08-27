@@ -10,6 +10,3 @@ def parse_message(message):
 	request.query = message
 	response = request.getresponse()
 	return response
-
-
-parse_message("transfere")
