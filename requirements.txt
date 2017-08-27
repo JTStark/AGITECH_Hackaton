@@ -1,3 +1,4 @@
 Flask==0.12
 Django==1.11.4
 pymessenger==0.0.7.0
+apiai==0.0.6
