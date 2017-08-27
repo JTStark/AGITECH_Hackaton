@@ -4,6 +4,8 @@ import ast
 db = Data_base(db_folder + db_name)
 
 def receive_message(userId, message):
+	print(message)
+	userId = int(userId)
 	status = db.get_user_state(userId)
 	operacao = ast.literal_eval(db.get_user_dictionary(userId))
 	if(('cancelar' in message.split()) or ('cancela' in message.split())):
