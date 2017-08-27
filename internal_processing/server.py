@@ -2,10 +2,12 @@ import csv
 import ast
 import json
 import requests
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-import SocketServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import socketserver
+import _thread
 
-############### CONSTANTS ##################
+
+############### CONSTANTS ###################
 
 header_db = ['Facebook_ID','Name', 'Owner_ID', 'Childs_ID', 'Current_state', 'Card_ID']
 db_folder = '../data/'
@@ -253,6 +255,15 @@ class Data_base:
 		else:
 			self.add_user_to_db(child)
 
+	def get_user_state(self, user_ID):
+		user = self.get_user_by_id(user_ID)
+		return user.current_state
+
+	def set_user_state(self, user_ID, new_state):
+		user = self.get_user_by_id(user_ID)
+		user.current_state = new_state
+		self.update_user(user)
+
 class Client_card_service:
 
 	def __init__(self, site, client_id, access_token, card_ID):
@@ -279,24 +290,54 @@ class Client_card_service:
 		else:
 			raise NameError('credit error')
 
+class S(BaseHTTPRequestHandler):
+	def _set_headers(self):
+		self.send_response(200)
+		self.send_header('Content-type', 'text/html')
+		self.end_headers()
 
+	def do_GET(self):
+		self._set_headers()
+		self.wfile.write('Get!!')
+
+	def do_HEAD(self):
+		self._set_headers()
+
+	def do_POST(self):
+		self._set_headers()
+		print("in post method")
+		self.data_string = self.rfile.read(int(self.headers['Content-Length']))
 		
+		self.send_response(200)
+		self.end_headers()
 		
-
-
-
+		data = simplejson.loads(self.data_string)
+		print("{}".format(data))
+		self.wfile.write('daora')
+		return
 
 ########### FUNCTIONS #############
 
+def run(server_class=HTTPServer, handler_class=S, port=80):
+	server_address = ('', port)
+	httpd = server_class(server_address, handler_class)
+	print('Comecei manow')
+	httpd.serve_forever()
 
 ############# MAIN ##############
 
-db = Data_base(db_folder + db_name)
+#_thread.start_new_thread(run,())
 
-user = db.get_user_by_id(1234)
-
+#db = Data_base(db_folder + db_name)
+#
+#print(db.set_user_state(1234, 'trnasferencia'))
+#
+#print(db.users)
+#
+##Espera a chamada de 
+#while True:
+#	pass
 #print(user.card.get_balance())
-print(user.card.get_balance())
 
 
 
