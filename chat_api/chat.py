@@ -42,7 +42,8 @@ def hello():
                     if x['message'].get('text'):
                         print("SENDED STUFF")
                         message = x['message']['text']
-                        answer = parser.receive_message(recipient_id, message)
+                        #answer = parser.receive_message(recipient_id, message)
+                        answer = "Hi there!"
                         bot.send_text_message(recipient_id, answer)
                 else:
                     pass
