@@ -1,5 +1,5 @@
 """
-This bot listens to port 5002 for incoming connections from Facebook. It takes
+This bot listens to a port for incoming connections from Facebook. It takes
 in any messages that the bot receives and echos it back.
 """
 from flask import Flask, request
@@ -7,10 +7,6 @@ from pymessenger.bot import Bot
 from pymessenger import Element
 from pymessenger import Button
 from os import environ
-import sys
-sys.path.append('../')
-import internal_processing.apiai_get as apiai_get
-
 
 
 app = Flask(__name__)
@@ -23,15 +19,20 @@ bot = Bot(ACCESS_TOKEN)
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
+
+
     if request.method == 'GET':
-        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
-            return request.args.get("hub.challenge")
-        else:
-            return 'Invalid verification token'
+        print("GOT A GET!!!")
+        print(request.args.get("source"))
+        #if request.args.get("hub.verify_token") == VERIFY_TOKEN:
+        #    return request.args.get("hub.challenge")
+        #else:
+        #    return 'Invalid verification token'
 
     if request.method == 'POST':
-        print("I GOT A POST!")
         output = request.get_json()
+        print(output)
+        print("OUTPUT RIGHT UP")
         for event in output['entry']:
             messaging = event['messaging']
             for x in messaging:
@@ -39,16 +40,21 @@ def hello():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        buttons = []
-                        print(message)
-                        button = Button(type='postback', title="select option 1", payload="YEAAAAAAAAAAHH")
-                        #button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='full',webview_share_button='hide')
-                        buttons.append(button)
-                        button = Button(type='postback', title="select option 2", payload="AIAIAIAIAIAIIAIA")
-                        buttons.append(button)
-                        text = 'Select'
-                        result = bot.send_button_message(recipient_id, text, buttons)
+                        answer = receive_message(recipient_id, message)
+                        bot.send_text_message(recipient_id, answer)
+                else:
+                    pass
         return "Success"
+
+def send_message(user_id, message):
+    bot.send_text_message(user_id, message)
+
+def initialize_payment_interface(user_id, amount):
+    buttons = []
+    button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Payment', webview_height_ratio='tall',webview_share_button='hide')
+    buttons.append(button)
+    text = 'Please click here to complete'
+    result = bot.send_button_message(recipient_id, text, buttons)
 
 
 if __name__ == "__main__":
