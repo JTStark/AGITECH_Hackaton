@@ -15,23 +15,33 @@ def receive_message(userId, message):
 		return 'Ola! O que gostaria de fazer? Digite \n1 para transferencia, \n2 para saldo, \n3 para extrato, \n4 para boleto e \n5 para receber.'
 	elif(status == 'escolha'):
 		if(message == '1'):
+			print('ELE CHAMOU 1')
 			db.set_user_state(userId, 'transf1')
 			operacao['op'] = 'transferencia'
 			db.set_user_dictionary(userId, str(operacao))
+			print('ELE CHAMOU 1')
 			return 'Quanto quer mandar?'
 		elif(message == '2'):
+			print('ELE CHAMOU 2')
 			db.set_user_state(userId, 'saldo1')
 			operacao['op'] = 'saldo'
 			db.set_user_dictionary(userId, str(operacao))
+			print('ELE CHAMOU 2')
+			balance = user.card.get_balance()
+			return 'Seu saldo equivale a R$' + str(balance)	+ '\n\nCaso queira fazer alguma outra operacao, fale comigo!' 
 		elif(message == '3'):
+			print('ELE CHAMOU 3')
 			db.set_user_state(userId, 'extrato1')
 			operacao['op'] = 'extrato'
 			db.set_user_dictionary(userId, str(operacao))
+			print('ELE CHAMOU 3')
 			return 'Qual o período que deseja ver? Temos as opções: hoje, semana ou mes.'
 		elif(message == '4'):
+			print('ELE CHAMOU 4')
 			db.set_user_state(userId, 'boleto1')
 			operacao['op'] = 'boleto'
 			db.set_user_dictionary(userId, str(operacao))
+			print('ELE CHAMOU 4')
 			return 'Digite o código do boleto que quer pagar.'
 		else:
 			db.set_user_state(userId, 'receber1')
