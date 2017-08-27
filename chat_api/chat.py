@@ -8,7 +8,7 @@ from pymessenger import Element
 from pymessenger import Button
 from os import environ
 import sys
-sys.path.insert(0, '../internal_processing/')
+sys.path.insert(0,'../internal_processing/')
 import message_parser as parser
 
 
@@ -54,7 +54,7 @@ def send_message(user_id, message):
 
 def initialize_payment_interface(user_id, amount):
     buttons = []
-    button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Payment', webview_height_ratio='tall',webview_share_button='hide')
+    button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value='+str(amount), title='Payment', webview_height_ratio='tall',webview_share_button='hide')
     buttons.append(button)
     text = 'Please click here to complete'
     result = bot.send_button_message(recipient_id, text, buttons)
