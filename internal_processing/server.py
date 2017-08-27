@@ -174,6 +174,7 @@ class Data_base:
 		return [user.facebook_ID, user.name, user.owner_ID, str(user.childs_ID), user.current_state, user.card.card_ID, str(user.dictionary)]
 
 	def add_user_to_db(self, new_user):
+		return
 		user_found = False
 		db_length = len(self.users)
 		init = 0
@@ -228,6 +229,7 @@ class Data_base:
 		self.update()
 
 	def update_user(self, user_update):
+		return 'nada'
 		user_found = False
 		db_length = len(self.users)
 		init = 0
