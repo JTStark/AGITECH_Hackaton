@@ -38,10 +38,10 @@ def hello():
             for x in messaging:
                 if x.get('message'):
                     recipient_id = x['sender']['id']
-                    print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
                         buttons = []
+                        print(message)
                         button = Button(type='postback', title="select option 1", payload="1")
                         #button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='full',webview_share_button='hide')
                         buttons.append(button)
