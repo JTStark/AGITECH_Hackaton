@@ -6,6 +6,7 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 from pymessenger import Element
 from pymessenger import Button
+import apiai
 from os import environ
 
 
@@ -34,15 +35,14 @@ def hello():
                 if x.get('message'):
                     recipient_id = x['sender']['id']
                     print("message2")
-                    #if x['message'].get('text'):
-                    message = x['message']['text']
-                    buttons = []
-                    button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='tall',webview_share_button='hide')
-                    buttons.append(button)
-                    text = 'Select'
-                    result = bot.send_button_message(recipient_id, text, buttons)
-                    #else:
-                    #    pass
+                    if x['message'].get('text'):
+                        raw_message = x['message']['text']
+                        message = apiai.parse_message(message)
+                        buttons = []
+                        button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='tall',webview_share_button='hide')
+                        buttons.append(button)
+                        text = 'Select'
+                        result = bot.send_button_message(recipient_id, text, buttons)
         return "Success"
 
 
