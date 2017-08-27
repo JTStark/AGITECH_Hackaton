@@ -23,7 +23,7 @@ def receive_message(userId, message):
 			operacao['op'] = 'transferencia'
 			db.set_user_dictionary(userId, str(operacao))
 			print('ELE CHAMOU 1')
-			initialize_payment_interface(userId, operacao['valor'])
+			initialize_payment_interface(userId, 300)
 			json = requests.get('https://www.ic.unicamp.br/~ra158044/')
 			user.card.credit(float(operacao['valor']))
 			return 'Quanto quer mandar?'
@@ -58,6 +58,9 @@ def receive_message(userId, message):
 		db.set_user_state(userId, 'transf2')
 		operacao['valor'] = message
 		db.set_user_dictionary(userId, str(operacao))
+		db.set_user_dictionary(userId, str(operacao))
+		print('ELE CHAMOU 1')
+		initialize_payment_interface(userId, 300)
 		return 'Mandar para quem?'
 	elif(status == 'transf2'):
 		try:
