@@ -17,7 +17,7 @@ VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/webhook", methods=['GET', 'POST'])
 def hello():
     if request.method == 'GET':
         if request.args.get("hub.verify_token") == VERIFY_TOKEN:
