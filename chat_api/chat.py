@@ -4,7 +4,7 @@ in any messages that the bot receives and echos it back.
 """
 from flask import Flask, request
 from pymessenger.bot import Bot
-from pymessenger import Element 
+from pymessenger import Element
 from os import environ
 
 app = Flask(__name__)
@@ -31,14 +31,9 @@ def hello():
             for x in messaging:
                 if x.get('message'):
                     recipient_id = x['sender']['id']
-                    print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        elements = []
-                        element = Element(title="test", image_url="http://orig06.deviantart.net/562d/f/2014/187/e/8/half_life_3_logo__with_lightning_effect__by_stavrapid_official-d7pho0q.png", subtitle="subtitle", item_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-                        elements.append(element)
-                        bot.send_generic_message(recipient_id, elements)
-                        print(recipient_id + " " + message)
+                        bot.send_text_message(recipient_id, message)
                     if x['message'].get('attachments'):
                         for att in x['message'].get('attachments'):
                             bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
