@@ -4,7 +4,11 @@ in any messages that the bot receives and echos it back.
 """
 from flask import Flask, request
 from pymessenger.bot import Bot
+from pymessenger import Element
+from pymessenger import Button
+import agitech.apiai as apiai
 from os import environ
+
 
 app = Flask(__name__)
 
@@ -32,14 +36,13 @@ def hello():
                     recipient_id = x['sender']['id']
                     print("message2")
                     if x['message'].get('text'):
-                        message = x['message']['text']
-                        bot.send_text_message(recipient_id, message)
-                        print(recipient_id + " " + message)
-                    if x['message'].get('attachments'):
-                        for att in x['message'].get('attachments'):
-                            bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
-                else:
-                    pass
+                        raw_message = x['message']['text']
+                        message = apiai.parse_message(message)
+                        buttons = []
+                        button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='tall',webview_share_button='hide')
+                        buttons.append(button)
+                        text = 'Select'
+                        result = bot.send_button_message(recipient_id, text, buttons)
         return "Success"
 
 
