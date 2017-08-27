@@ -30,6 +30,7 @@ def hello():
             return 'Invalid verification token'
 
     if request.method == 'POST':
+        print("I GOT A POST!")
         output = request.get_json()
         print("message1")
         for event in output['entry']:
