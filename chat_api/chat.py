@@ -17,14 +17,11 @@ VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
 
 
-@app.route("/webhook", methods=['PUT','GET', 'POST'])
+@app.route("/webhook", methods=['GET', 'POST'])
 def hello():
-    if request.method == 'PUT':
-        output = request.args
-        print(output)
-        print("GOT A PUT")
 
     if request.method == 'GET':
+        print("GOT A GET!!!")
         if request.args.get("hub.verify_token") == VERIFY_TOKEN:
             return request.args.get("hub.challenge")
         else:
