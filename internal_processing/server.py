@@ -2,6 +2,8 @@ import csv
 import ast
 import json
 import requests
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import SocketServer
 
 ############### CONSTANTS ##################
 
@@ -25,7 +27,7 @@ example_child1 = [1234, 'Guilherme', 1236, [], initializing_state, 3713100019442
 example_child2 = [1235, 'Joao', 1236, [], initializing_state, 3713100019459]
 example_father = [1236, 'Pedro', 0, [1234,1235], initializing_state, 3713100019467]
 example_child_alone = [1238, 'Leonardo', 0, [], initializing_state, 3713100019475]
-examples = [example_child1, example_child2, example_father, example_child_alone, 3713100019483]
+examples = [example_child1, example_child2, example_father, example_child_alone]
 
 json_example = '{\"Facebook_ID\":1232,\"name\":\"Augusto\",\"owner_ID\":333,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
 json_example_children = '{\"Facebook_ID\":1238,\"name\":\"Fernando\",\"owner_ID\":0,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
@@ -49,7 +51,7 @@ class User:
 			for ID in childs_ID_splited:
 				self.childs_ID.append(int(ID))
 		self.current_state = current_state
-		self.card_ID = card_ID
+		self.card = Client_card_service(agilitas_site, client_id, access_token, card_ID)
 
 
 #Manage the database with specified csv file name
@@ -251,7 +253,7 @@ class Data_base:
 		else:
 			self.add_user_to_db(child)
 
-class Card_service:
+class Client_card_service:
 
 	def __init__(self, site, client_id, access_token, card_ID):
 		self.site = site
@@ -264,31 +266,40 @@ class Card_service:
 
 	def get_balance(self):
 		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
-		r = requests.get(self.site + url_cards + '/' + self.card_ID + '/' + url_saldo, headers=header)
-
-		print (r.json())
+		r = requests.get(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_saldo, headers=header)
 		print(r)
+		return r.json()['saldo']['valor']
+
+	def credit(self, value):
+		body = {'saldo': {'valor':value}}
+		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
+		r = requests.put(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_saldo, headers=header, json=body)
+		if r.status_code == 204:
+			return 'success'
+		else:
+			raise NameError('credit error')
+
+
+		
+		
+
+
 
 
 ########### FUNCTIONS #############
 
-def post():
-
-	dados = {"Accept": "application/json",'client_id':client_id, 'access_token':token}
-
-	print (dados)
-	print(agilitas_site+url_cards + '/' + id_cartao + '/' + url_saldo)
-
-	r = requests.get(agilitas_site+url_cards+id_cartao+url_saldo, headers=dados)
-
-	print (r.json())
-	print(r)
 
 ############# MAIN ##############
 
-#db = Data_base(db_folder + db_name)
+db = Data_base(db_folder + db_name)
+
+user = db.get_user_by_id(1234)
+
+#print(user.card.get_balance())
+print(user.card.get_balance())
 
 
-card_service = Card_service(agilitas_site, client_id, access_token, card_ID)
-card_service.get_balance()
+
+#client = Client_card_service(agilitas_site, client_id, access_token, example_child1[5])
+#card_service.get_balance()
 
