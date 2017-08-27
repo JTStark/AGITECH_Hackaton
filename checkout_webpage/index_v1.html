@@ -1,0 +1,54 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Visa Checkout</title>
+
+  <style>
+    body { color: black; background: lightblue; }
+  </style>
+
+  <script type="text/javascript">
+    
+    function onVisaCheckoutReady (){
+      V.init({
+        apikey: "DCGBG5ODPOAZ0MXAAIWV21JFYg6AJ3P1bCp-9DcqRUzf-kYHI",
+        paymentRequest:{
+          currencyCode: "BRL",
+          total: document.getElementById('val').value
+        }
+      });
+      V.on("payment.success", function(payment){
+        console.log(JSON.stringify(payment));
+        sendPayment()
+      });
+      V.on("payment.cancel", function(payment){
+        console.log('Pagamento cancelado.');
+        sendPayment()
+      });
+      V.on("payment.error", function(payment, error){
+        console.log('Erro ao realizar pagamento.');
+        sendPayment()
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <center>
+  Valor do depósito:
+
+  <br>
+
+  <input id="val"></input>
+
+  <br><br>
+
+  <img alt="Visa Checkout" class="v-button" role="button"
+     src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/>
+  <script type="text/javascript"
+     src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+  </script>
+  </center>
+</body>
+</html>
