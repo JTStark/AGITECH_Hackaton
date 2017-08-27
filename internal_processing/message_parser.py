@@ -50,8 +50,8 @@ def receive_message(userId, message):
 			return 'Nao entendi, poderia repetir'
 		
 	elif(status == 'transf1'):
-		if(message is not int):
-			return 'Desculpe, acho que você digitou errado. Diga novamente o valor que deseja transferir.'
+		#if(message is not int):
+		#	return 'Desculpe, acho que você digitou errado. Diga novamente o valor que deseja transferir.'
 		db.set_user_state(userId, 'transf2')
 		operacao['valor'] = message
 		db.set_user_dictionary(userId, str(operacao))
