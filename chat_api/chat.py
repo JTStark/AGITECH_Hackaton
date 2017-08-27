@@ -9,7 +9,7 @@ from pymessenger import Button
 from os import environ
 import sys
 sys.path.append('../')
-from internal_processing.apiai_get import apiai_get
+import internal_processing.apiai_get as apiai_get
 
 
 
