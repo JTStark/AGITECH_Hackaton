@@ -26,10 +26,10 @@ user_id_not_found = 'user id not found'
 #States
 initializing_state = 'init'
 
-example_child1 = [1234, 'Guilherme', 1236, '[]', initializing_state, 3713100019442, '{}']
-example_child2 = [1235, 'Joao', 1236, '[]', initializing_state, 3713100019459, '{}']
-example_father = [1236, 'Pedro', 0, '[1234,1235]', initializing_state, 3713100019467, '{}']
-example_child_alone = [1238, 'Leonardo', 0, '[]', initializing_state, 3713100019475, '{}']
+example_child1 = [1234, 'Ana', 565685573555028, '[]', initializing_state, 3713100019442, '{}']
+example_child2 = [1235, 'Joao', 565685573555028, '[]', initializing_state, 3713100019459, '{}']
+example_father = [1236, 'Manuel', 0, '[]', initializing_state, 3713100019467, '{}']
+example_child_alone = [565685573555028, 'Pedro Stringhini', 0, '[1234,1235]', initializing_state, 3713100019475, '{}']
 examples = [example_child1, example_child2, example_father, example_child_alone]
 
 json_example = '{\"Facebook_ID\":1232,\"name\":\"Augusto\",\"owner_ID\":333,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
