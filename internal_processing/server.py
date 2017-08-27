@@ -223,7 +223,7 @@ class Data_base:
 			user = self.create_user(position)
 
 			if user.facebook_ID == user_id:
-				db.users[int(position)] = self.parse_user_to_list(user_update)
+				self.users[int(position)] = self.parse_user_to_list(user_update)
 				return
 			else:
 
@@ -328,7 +328,7 @@ def run(server_class=HTTPServer, handler_class=S, port=80):
 
 #_thread.start_new_thread(run,())
 
-#db = Data_base(db_folder + db_name)
+db = Data_base(db_folder + db_name)
 #
 #print(db.set_user_state(1234, 'trnasferencia'))
 #
