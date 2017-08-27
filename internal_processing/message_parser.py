@@ -23,6 +23,9 @@ def receive_message(userId, message):
 			operacao['op'] = 'transferencia'
 			db.set_user_dictionary(userId, str(operacao))
 			print('ELE CHAMOU 1')
+			initialize_payment_interface(userId, operacao['valor'])
+			json = requests.get('https://www.ic.unicamp.br/~ra158044/')
+			user.card.credit(float(operacao['valor']))
 			return 'Quanto quer mandar?'
 		elif(message == '2'):
 			print('ELE CHAMOU 2')
