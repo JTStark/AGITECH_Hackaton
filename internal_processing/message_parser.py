@@ -1,4 +1,4 @@
-from server import *
+from .server import *
 import ast
 
 db = Data_base(db_folder + db_name)
@@ -9,12 +9,12 @@ def receive_message(userId, message):
 	if(('cancelar' in message.split()) or ('cancela' in message.split())):
 		db.set_user_dictionary(userId, '')
 		db.set_user_state(userId, 'escolha')
-		return 'Operação cancelada. O que deseja fazer agora? Digite 1 para transferencia, 2 para saldo, 3 para extrato e 4 para boleto.'
+		return 'Operacao cancelada. O que deseja fazer agora? Digite 1 para transferencia, 2 para saldo, 3 para extrato e 4 para boleto.'
 	elif(status == 'init'):
 		db.set_user_state(userId, 'escolha')
 		return 'Ola! O que gostaria de fazer? Digite \n1 para transferencia, \n2 para saldo, \n3 para extrato, \n4 para boleto e \n5 para receber.'
 	elif(status == 'escolha'):
-		if(message == '1'):	
+		if(message == '1'):
 			db.set_user_state(userId, 'transf1')
 			operacao['op'] = 'transferencia'
 			db.set_user_dictionary(userId, str(operacao))
