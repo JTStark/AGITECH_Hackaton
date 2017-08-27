@@ -26,10 +26,10 @@ user_id_not_found = 'user id not found'
 #States
 initializing_state = 'init'
 
-example_child1 = [1234, 'Guilherme', 1236, [], initializing_state, 3713100019442, '{}']
-example_child2 = [1235, 'Joao', 1236, [], initializing_state, 3713100019459, '{}']
-example_father = [1236, 'Pedro', 0, [1234,1235], initializing_state, 3713100019467, '{}']
-example_child_alone = [1238, 'Leonardo', 0, [], initializing_state, 3713100019475, '{}']
+example_child1 = [1234, 'Guilherme', 1236, '[]', initializing_state, 3713100019442, '{}']
+example_child2 = [1235, 'Joao', 1236, '[]', initializing_state, 3713100019459, '{}']
+example_father = [1236, 'Pedro', 0, '[1234,1235]', initializing_state, 3713100019467, '{}']
+example_child_alone = [1238, 'Leonardo', 0, '[]', initializing_state, 3713100019475, '{}']
 examples = [example_child1, example_child2, example_father, example_child_alone]
 
 json_example = '{\"Facebook_ID\":1232,\"name\":\"Augusto\",\"owner_ID\":333,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
@@ -70,28 +70,35 @@ class Data_base:
 
 
 	def create(self, examples):
-		with open(self.file_name, 'w') as arq:
-			arqCsv = csv.writer(arq)
-			arqCsv.writerow(header_db)
-			for user in examples:
-				arqCsv.writerow(user)
+		pass
+		#with open(self.file_name, 'w') as arq:
+		#	arqCsv = csv.writer(arq)
+		#	arqCsv.writerow(header_db)
+		#	for user in examples:
+		#		arqCsv.writerow(user)
 
 
 	def update(self):
-		with open(self.file_name, 'w') as arq:
-			arqCsv = csv.writer(arq)
-			arqCsv.writerow(header_db)
-			for user in self.users:
-				arqCsv.writerow(user)
+		pass
+		#with open(self.file_name, 'w') as arq:
+		#	arqCsv = csv.writer(arq)
+		#	arqCsv.writerow(header_db)
+		#	for user in self.users:
+		#		arqCsv.writerow(user)
 
 	def read(self):
+
 		try:
-			with open(self.file_name, 'r') as arq:
-				arqCsv = csv.reader(arq)
-				next(arqCsv)
-				for user in arqCsv:
-					self.users.append(user)
-				self.users.pop(0)
+			#with open(self.file_name, 'r') as arq:
+			#	arqCsv = csv.reader(arq)
+			#	next(arqCsv)
+			#	for user in arqCsv:
+			#		self.users.append(user)
+			#	self.users.pop(0)
+			for user in examples:
+				self.users.append(user)
+			self.users.pop(0)
+			print(self.users)
 		except:
 			self.create(examples)
 
@@ -361,7 +368,7 @@ def run(server_class=HTTPServer, handler_class=S, port=80):
 
 #_thread.start_new_thread(run,())
 
-db = Data_base(db_folder + db_name)
+#db = Data_base(db_folder + db_name)
 
 #db.create(examples)
 #
