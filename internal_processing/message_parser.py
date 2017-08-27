@@ -46,6 +46,8 @@ def receive_message(userId, message):
 			db.set_user_dictionary(userId, str(operacao))
 			print('ELE CHAMOU 4')
 			return 'Digite o código do boleto que quer pagar.'
+		else:
+			return 'Nao entendi, poderia repetir'
 		
 	elif(status == 'transf1'):
 		if(message is not int):
