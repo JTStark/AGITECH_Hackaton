@@ -87,7 +87,7 @@ class Data_base:
 		#		arqCsv.writerow(user)
 
 	def read(self):
-
+		#
 		try:
 			#with open(self.file_name, 'r') as arq:
 			#	arqCsv = csv.reader(arq)
