@@ -2,8 +2,12 @@ import csv
 import ast
 import json
 import requests
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import socketserver
+import _thread
 
-############### CONSTANTS ##################
+
+############### CONSTANTS ###################
 
 header_db = ['Facebook_ID','Name', 'Owner_ID', 'Childs_ID', 'Current_state', 'Card_ID']
 db_folder = '../data/'
@@ -25,7 +29,7 @@ example_child1 = [1234, 'Guilherme', 1236, [], initializing_state, 3713100019442
 example_child2 = [1235, 'Joao', 1236, [], initializing_state, 3713100019459]
 example_father = [1236, 'Pedro', 0, [1234,1235], initializing_state, 3713100019467]
 example_child_alone = [1238, 'Leonardo', 0, [], initializing_state, 3713100019475]
-examples = [example_child1, example_child2, example_father, example_child_alone, 3713100019483]
+examples = [example_child1, example_child2, example_father, example_child_alone]
 
 json_example = '{\"Facebook_ID\":1232,\"name\":\"Augusto\",\"owner_ID\":333,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
 json_example_children = '{\"Facebook_ID\":1238,\"name\":\"Fernando\",\"owner_ID\":0,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
@@ -49,7 +53,7 @@ class User:
 			for ID in childs_ID_splited:
 				self.childs_ID.append(int(ID))
 		self.current_state = current_state
-		self.card_ID = card_ID
+		self.card = Client_card_service(agilitas_site, client_id, access_token, card_ID)
 
 
 #Manage the database with specified csv file name
@@ -251,7 +255,16 @@ class Data_base:
 		else:
 			self.add_user_to_db(child)
 
-class Card_service:
+	def get_user_state(self, user_ID):
+		user = self.get_user_by_id(user_ID)
+		return user.current_state
+
+	def set_user_state(self, user_ID, new_state):
+		user = self.get_user_by_id(user_ID)
+		user.current_state = new_state
+		self.update_user(user)
+
+class Client_card_service:
 
 	def __init__(self, site, client_id, access_token, card_ID):
 		self.site = site
@@ -264,31 +277,70 @@ class Card_service:
 
 	def get_balance(self):
 		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
-		r = requests.get(self.site + url_cards + '/' + self.card_ID + '/' + url_saldo, headers=header)
-
-		print (r.json())
+		r = requests.get(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_saldo, headers=header)
 		print(r)
+		return r.json()['saldo']['valor']
 
+	def credit(self, value):
+		body = {'saldo': {'valor':value}}
+		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
+		r = requests.put(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_saldo, headers=header, json=body)
+		if r.status_code == 204:
+			return 'success'
+		else:
+			raise NameError('credit error')
+
+class S(BaseHTTPRequestHandler):
+	def _set_headers(self):
+		self.send_response(200)
+		self.send_header('Content-type', 'text/html')
+		self.end_headers()
+
+	def do_GET(self):
+		self._set_headers()
+		self.wfile.write('Get!!')
+
+	def do_HEAD(self):
+		self._set_headers()
+
+	def do_POST(self):
+		self._set_headers()
+		print("in post method")
+		self.data_string = self.rfile.read(int(self.headers['Content-Length']))
+		
+		self.send_response(200)
+		self.end_headers()
+		
+		data = simplejson.loads(self.data_string)
+		print("{}".format(data))
+		self.wfile.write('daora')
+		return
 
 ########### FUNCTIONS #############
 
-def post():
-
-	dados = {"Accept": "application/json",'client_id':client_id, 'access_token':token}
-
-	print (dados)
-	print(agilitas_site+url_cards + '/' + id_cartao + '/' + url_saldo)
-
-	r = requests.get(agilitas_site+url_cards+id_cartao+url_saldo, headers=dados)
-
-	print (r.json())
-	print(r)
+def run(server_class=HTTPServer, handler_class=S, port=80):
+	server_address = ('', port)
+	httpd = server_class(server_address, handler_class)
+	print('Comecei manow')
+	httpd.serve_forever()
 
 ############# MAIN ##############
 
+#_thread.start_new_thread(run,())
+
 #db = Data_base(db_folder + db_name)
+#
+#print(db.set_user_state(1234, 'trnasferencia'))
+#
+#print(db.users)
+#
+##Espera a chamada de 
+#while True:
+#	pass
+#print(user.card.get_balance())
 
 
-card_service = Card_service(agilitas_site, client_id, access_token, card_ID)
-card_service.get_balance()
+
+#client = Client_card_service(agilitas_site, client_id, access_token, example_child1[5])
+#card_service.get_balance()
 
