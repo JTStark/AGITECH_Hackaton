@@ -9,9 +9,9 @@ def receive_message(userId, message):
 	if(('cancelar' in message.split()) or ('cancela' in message.split())):
 		db.set_user_dictionary(userId, '')
 		db.set_user_state(userId, 'escolha')
-		return 'Operação cancelada. O que deseja fazer agora? Digite 1 para transferencia, 2 para saldo, 3 para extrato, 4 para boleto e 5 para receber.'
+		return 'Operação cancelada. O que deseja fazer agora? Digite 1 para transferencia, 2 para saldo, 3 para extrato e 4 para boleto.'
 	elif(status == 'init'):
-		return 'Ola! O que gostaria de fazer? Digite 1 para transferencia, 2 para saldo, 3 para extrato, 4 para boleto e 5 para receber.'
+		return 'Ola! O que gostaria de fazer? Digite \n1 para transferencia, \n2 para saldo, \n3 para extrato, \n4 para boleto e \n5 para receber.'
 	elif(status == 'escolha'):
 		if(message == '1'):	
 			db.set_user_state(userId, 'transf1')
@@ -26,7 +26,7 @@ def receive_message(userId, message):
 			db.set_user_state(userId, 'extrato1')
 			operacao['op'] = 'extrato'
 			db.set_user_dictionary(userId, str(operacao))
-			return 'Qual o período que deseja ver?'
+			return 'Qual o período que deseja ver? Temos as opções: hoje, semana ou mes.'
 		elif(message == '4'):
 			db.set_user_state(userId, 'boleto1')
 			operacao['op'] = 'boleto'
@@ -38,25 +38,31 @@ def receive_message(userId, message):
 			db.set_user_dictionary(userId, str(operacao))
 			return 'Quanto quer pedir para o responsável?'
 	elif(status == 'transf1'):
+		if(message is not int):
+			return 'Desculpe, acho que você digitou errado. Diga novamente o valor que deseja transferir.'
 		db.set_user_state(userId, 'transf2')
 		operacao['valor'] = message
 		db.set_user_dictionary(userId, str(operacao))
 		return 'Mandar para quem?'
 	elif(status == 'transf2'):
+		try:
+			get_child_by_name(idUser, message)
+		except:
+			return 'Nome não encontrado. Por gentileza, digite o nome corretamente.'
 		db.set_user_state(userId, 'transf3')
 		operacao['destino'] = message
 		db.set_user_dictionary(userId, str(operacao))
 	elif(status == 'extrato1'):
+		if(!(message.lower() in ['hoje', 'semana', 'mes'])):
+			return 'A opção que você digitou não existe. Por favor, escolha entre hoje, semana ou mes.'
 		db.set_user_state(userId, 'extrato2')
 		operacao['periodo'] = message
 		db.set_user_dictionary(userId, str(operacao))
 	elif(status == 'boleto1'):
+		if(message is not int):
+			return 'O código esta errado. Pode repetir por favor?'
 		db.set_user_state(userId, 'boleto2')
 		operacao['codigo'] = message
-		db.set_user_dictionary(userId, str(operacao))
-	elif(status == 'receber1'):
-		db.set_user_state(userId, 'receber2')
-		operacao['valor'] = message
 		db.set_user_dictionary(userId, str(operacao))
 	elif(status in ['saldo1', 'receber2', 'boleto2', 'transf3', 'extrato2']):
 		db.set_user_dictionary(userId, '')
