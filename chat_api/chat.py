@@ -10,6 +10,7 @@ import agitech.apiai as apiai
 from os import environ
 
 
+
 app = Flask(__name__)
 
 ACCESS_TOKEN = "EAAEygPWKlxQBAAfVMjE9Lx9dZAxysVTbQlQ3GVCQukz2HDFuptDkEW2FZBLKOuj1ZArZBpkQfoTxZB9BaLHsON2hE6bt2RW6ibvZAsZBJNw2lUE0PmKnG277wR9yueRGSUB98adgHBb8f7YjvikVZBiOtH1J70Kkz1CgIZCzE34AgkgZDZD"
