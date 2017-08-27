@@ -1,0 +1,46 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Visa Checkout</title>
+
+  <style>
+    body { color: black; background: green; }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+    }
+  </style>
+
+  <script>
+
+    function loaded(){
+      window.setTimeout(CloseMe, 2000);
+    }
+
+    function CloseMe(){
+      window.close();
+      window.location = "https://www.messenger.com/closeWindow/?image_url=IMAGE_URL&display_text=";
+    }
+
+  </script>
+</head>
+
+<body onLoad="loaded()">
+  <div class="container">
+    <center>
+      <h1>CARTÃO ESCOLHIDO COM SUCESSO!</h1>
+    </center>
+  </div>
+
+  <script type="text/javascript">
+    wait(2000)
+
+  </script>
+</body>
+</html>

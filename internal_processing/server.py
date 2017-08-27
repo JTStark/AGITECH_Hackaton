@@ -16,6 +16,7 @@ db_name = 'db.csv'
 agilitas_site = 'https://api-visa.sensedia.com/sandbox/visa/agillitas/v1/'
 url_cards = 'cartoes'
 url_saldo = 'saldo'
+url_pay = 'pagamentos'
 client_id = '0e9fb672-36f8-3c62-a317-101140d09ec8'
 access_token = 'bac69888-61e1-3424-9dee-cf4e83ef5368'
 
@@ -151,7 +152,7 @@ class Data_base:
 	def get_child_by_name(self, owner_ID, name):
 		childs = self.get_childs(owner_ID)
 		for child in childs:
-			if child.name == name:
+			if child.name.lower() == name.lower():
 				return child
 		raise NameError('The ID: ' + str(owner_ID) + ' has no children with name: ' + name)
 
@@ -309,6 +310,15 @@ class Client_card_service:
 		else:
 			raise NameError('credit error')
 
+	def pay(self, password, barcode):
+		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
+		body = {'pagamento': {'idCartao':self.card_ID, 'senha':password, 'codigoBarras':barcode}}
+		r = requests.post(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_pay, headers=header, json=body)
+		if r.status_code == 201:
+			return 'success'
+		else:
+			raise NameError('credit error')
+
 class S(BaseHTTPRequestHandler):
 	def _set_headers(self):
 		self.send_response(200)
@@ -354,14 +364,10 @@ db = Data_base(db_folder + db_name)
 #while True:
 #	pass
 
-user = db.create_user(0)
+user = db.create_user(2)
+user.card.pay("123123", "123312 3123123 123 123 123123")
 
-print(db.get_user_state(user.facebook_ID))
-print(db.get_user_dictionary(user.facebook_ID))
-db.set_user_state(user.facebook_ID, 'transf1')
-db.set_user_dictionary(user.facebook_ID, 'meu dicionario')
-print(db.get_user_state(user.facebook_ID))
-print(db.get_user_dictionary(user.facebook_ID))
+#print(db.get_child_by_name(user.facebook_ID, 'joao'))
 #
 #print(db.set_user_state(1234, 'trnasferencia'))
 #
