@@ -9,7 +9,7 @@ from pymessenger import Button
 from os import environ
 import sys
 sys.path.append('../')
-from internal_processing.apiai import apiai
+from internal_processing.apiai_get import apiai_get
 
 
 
@@ -40,7 +40,7 @@ def hello():
                     print("message2")
                     if x['message'].get('text'):
                         raw_message = x['message']['text']
-                        message = apiai.parse_message(message)
+                        message = apiai_get.parse_message(message)
                         buttons = []
                         button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='full',webview_share_button='hide')
                         buttons.append(button)
