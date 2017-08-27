@@ -310,14 +310,15 @@ class Client_card_service:
 		else:
 			raise NameError('credit error')
 
-	# def pay(self, password, barcode):
-	# 	header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
-	# 	body = {'pagamento': {'idCartao':self.card_ID, 'senha':password, 'codigoBarras':barcode}}
-	# 	r = requests.post(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_pay, headers=header, json=body)
-	# 	if r.status_code == 201:
-	# 		return 'success'
-	# 	else:
-	# 		raise NameError('credit error')
+	def pay(self, password, barcode):
+		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
+		body = {'pagamento': {'idCartao':self.card_ID, 'senha':password, 'codigoBarras':barcode}}
+		r = requests.post(self.site + '/' + url_pay, headers=header, json=body)
+		print(r.text)
+		if r.status_code == 201:
+			return 'success'
+		else:
+			raise NameError('pay error')
 
 class S(BaseHTTPRequestHandler):
 	def _set_headers(self):
@@ -365,7 +366,7 @@ db = Data_base(db_folder + db_name)
 #	pass
 
 user = db.create_user(2)
-#user.card.pay("123123", "123312 3123123 123 123 123123")
+user.card.pay("123123", "123312 3123123 123 123 123123")
 
 #print(db.get_child_by_name(user.facebook_ID, 'joao'))
 #
