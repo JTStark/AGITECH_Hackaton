@@ -117,8 +117,8 @@ class Data_base:
 				if user.facebook_ID > user_id:
 					db_length = position
 					position = init + int((position - init)/2)
-					
-					
+
+
 				else:
 					init = position
 					position += int((db_length - position)/2)
@@ -143,7 +143,7 @@ class Data_base:
 		except:
 			raise NameError('Owner ID not found: ' + str(owner_ID))
 
-		
+
 		children_list = owner_user.childs_ID
 		if children_list == []:
 			raise NameError('Owner ID has no children: ' + str(owner_user.facebook_ID))
@@ -173,7 +173,7 @@ class Data_base:
 
 		while True:
 
-		
+
 			user = self.create_user(int(position))
 			#print user
 			if int(user.facebook_ID) == user_id:
@@ -187,15 +187,15 @@ class Data_base:
 				if int(user.facebook_ID) > user_id:
 					db_length = position
 					position = init + int((position - init)/2)
-					
-					
+
+
 				else:
 					init = position
 					if len(self.users) - position == 1:
 						self.users.append(self.parse_user_to_list(new_user))
 						return
 					position += int((db_length - position)/2)
-					
+
 
 
 	def user_exists(self, user_ID):
@@ -236,8 +236,8 @@ class Data_base:
 				if user.facebook_ID > user_id:
 					db_length = position
 					position = init + int((position - init)/2)
-					
-					
+
+
 				else:
 					init = position
 					position += int((db_length - position)/2)
@@ -249,12 +249,12 @@ class Data_base:
 		child_json = json.loads(child_data)
 		child = User(child_json['Facebook_ID'], child_json['name'], father_ID, '[]', initializing_state, child_json['card_ID'], '')
 		father = self.get_user_by_id(father_ID)
-		
+
 		child.owner_ID = father_ID
 		father.childs_ID.append(child.facebook_ID)
 
 		if self.user_exists(child.facebook_ID):
-			
+
 			self.update_user(child)
 			self.update_user(father)
 		else:
@@ -337,10 +337,10 @@ class S(BaseHTTPRequestHandler):
 		self._set_headers()
 		print("in post method")
 		self.data_string = self.rfile.read(int(self.headers['Content-Length']))
-		
+
 		self.send_response(200)
 		self.end_headers()
-		
+
 		data = simplejson.loads(self.data_string)
 		print("{}".format(data))
 		self.wfile.write('daora')
@@ -365,8 +365,8 @@ db = Data_base(db_folder + db_name)
 #while True:
 #	pass
 
-user = db.create_user(2)
-user.card.pay("123123", "123312 3123123 123 123 123123")
+#user = db.create_user(2)
+#user.card.pay("123123", "123312 3123123 123 123 123123")
 
 #print(db.get_child_by_name(user.facebook_ID, 'joao'))
 #
@@ -374,7 +374,7 @@ user.card.pay("123123", "123312 3123123 123 123 123123")
 #
 #print(db.users)
 #
-##Espera a chamada de 
+##Espera a chamada de
 #while True:
 #	pass
 #print(user.card.get_balance())
@@ -383,4 +383,3 @@ user.card.pay("123123", "123312 3123123 123 123 123123")
 
 #client = Client_card_service(agilitas_site, client_id, access_token, example_child1[5])
 #card_service.get_balance()
-
