@@ -1,4 +1,4 @@
-from server import *
+from .server import *
 import ast
 
 db = Data_base(db_folder + db_name)
