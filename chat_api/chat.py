@@ -39,7 +39,7 @@ def hello():
                         buttons = []
                         button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', webview_height_ratio='full',webview_share_button='hide')
                         buttons.append(button)
-                        result = bot.send_button_message(recipient_id, text, buttons)
+                        result = bot.send_button_message(recipient_id, "CLICK HERE BABY", buttons)
                     else:
                         pass
         return "Success"
