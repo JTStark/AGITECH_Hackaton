@@ -7,7 +7,7 @@ import socketserver
 import _thread
 
 
-############### CONSTANTS ##################
+############### CONSTANTS ###################
 
 header_db = ['Facebook_ID','Name', 'Owner_ID', 'Childs_ID', 'Current_state', 'Card_ID']
 db_folder = '../data/'
