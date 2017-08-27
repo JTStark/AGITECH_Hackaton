@@ -6,6 +6,15 @@
 
   <style>
     body { color: black; background: lightblue; }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+    }
   </style>
 
   <script type="text/javascript">
@@ -43,12 +52,14 @@
 </head>
 
 <body>
-  <center>
-  <img alt="Visa Checkout" class="v-button" role="button"
-     src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/>
-  <script type="text/javascript"
-     src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
-  </script>
-  </center>
+  <div class="container">
+    <center>
+      <img alt="Visa Checkout" class="v-button" role="button"
+         src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/>
+      <script type="text/javascript"
+         src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+      </script>
+    </center>
+</div>
 </body>
 </html>
