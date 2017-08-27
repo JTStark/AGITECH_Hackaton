@@ -22,10 +22,11 @@ def hello():
 
     if request.method == 'GET':
         print("GOT A GET!!!")
-        if request.args.get("hub.verify_token") == VERIFY_TOKEN:
-            return request.args.get("hub.challenge")
-        else:
-            return 'Invalid verification token'
+        print(request.args)
+        #if request.args.get("hub.verify_token") == VERIFY_TOKEN:
+        #    return request.args.get("hub.challenge")
+        #else:
+        #    return 'Invalid verification token'
 
     if request.method == 'POST':
         output = request.get_json()
