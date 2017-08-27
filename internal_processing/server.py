@@ -151,7 +151,7 @@ class Data_base:
 	def get_child_by_name(self, owner_ID, name):
 		childs = self.get_childs(owner_ID)
 		for child in childs:
-			if child.name == name:
+			if child.name.lower() == name.lower():
 				return child
 		raise NameError('The ID: ' + str(owner_ID) + ' has no children with name: ' + name)
 
@@ -354,14 +354,9 @@ db = Data_base(db_folder + db_name)
 #while True:
 #	pass
 
-user = db.create_user(0)
+user = db.create_user(2)
 
-print(db.get_user_state(user.facebook_ID))
-print(db.get_user_dictionary(user.facebook_ID))
-db.set_user_state(user.facebook_ID, 'transf1')
-db.set_user_dictionary(user.facebook_ID, 'meu dicionario')
-print(db.get_user_state(user.facebook_ID))
-print(db.get_user_dictionary(user.facebook_ID))
+print(db.get_child_by_name(user.facebook_ID, 'joao'))
 #
 #print(db.set_user_state(1234, 'trnasferencia'))
 #
