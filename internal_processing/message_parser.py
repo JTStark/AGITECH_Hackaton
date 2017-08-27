@@ -7,7 +7,7 @@ def receive_message(userId, message):
 	status = db.get_user_state(userId)
 	operacao = ast.literal_eval(db.get_user_dictionary(userId))
 	if(('cancelar' in message.split()) or ('cancela' in message.split())):
-		db.set_user_dictionary(userId, '')
+		db.set_user_dictionary(userId, '{}')
 		db.set_user_state(userId, 'escolha')
 		return 'Operacao cancelada. O que deseja fazer agora? Digite 1 para transferencia, 2 para saldo, 3 para extrato e 4 para boleto.'
 	elif(status == 'init'):
@@ -66,7 +66,12 @@ def receive_message(userId, message):
 		operacao['codigo'] = message
 		db.set_user_dictionary(userId, str(operacao))
 	elif(status in ['saldo1', 'receber2', 'boleto2', 'transf3', 'extrato2']):
-		db.set_user_dictionary(userId, '')
+		db.set_user_dictionary(userId, '{}')
+		db.set_user_state(userId, 'escolha')
+		user = db.create_user_by_id(userId)
+		if(status == 'saldo1')
+			balance = user.card.get_balance()
+			return 'Seu saldo equivale a R$' + str(balance)	+ '\n\nCaso queira fazer alguma outra operacao, fale comigo!'
 		return operacao
 
 print(receive_message(1236, 'Joao'))
