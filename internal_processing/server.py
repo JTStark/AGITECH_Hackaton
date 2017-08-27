@@ -112,6 +112,7 @@ class Data_base:
 		db_length = len(self.users)
 		init = 0
 		position = int(db_length/2)
+		user_id = int(user_id)
 
 		while not user_found:
 
@@ -273,20 +274,24 @@ class Data_base:
 		self.update()
 
 	def get_user_state(self, user_ID):
+		user_ID = int(user_ID)
 		user = self.get_user_by_id(user_ID)
 		return user.current_state
 
 	def get_user_dictionary(self, user_ID):
+		user_ID = int(user_ID)
 		user = self.get_user_by_id(user_ID)
 		return user.dictionary
 
 	def set_user_dictionary(self, user_ID, dictionary):
+		user_ID = int(user_ID)
 		user = self.get_user_by_id(user_ID)
 		user.dictionary = dictionary
 		self.update_user(user)
 		self.update()
 
 	def set_user_state(self, user_ID, new_state):
+		user_ID = int(user_ID)
 		user = self.get_user_by_id(user_ID)
 		user.current_state = new_state
 		self.update_user(user)
