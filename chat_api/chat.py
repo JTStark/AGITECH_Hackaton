@@ -40,8 +40,8 @@ def hello():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        #answer = parser.receive_message(recipient_id, message)
-                        bot.send_text_message(recipient_id, "HELLO!")
+                        answer = parser.receive_message(recipient_id, message)
+                        bot.send_text_message(recipient_id, answer)
                 else:
                     pass
         return "Success"
