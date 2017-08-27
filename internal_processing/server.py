@@ -313,11 +313,12 @@ class Client_card_service:
 	def pay(self, password, barcode):
 		header = {"Accept": "application/json",'client_id':self.client_id, 'access_token':self.access_token}
 		body = {'pagamento': {'idCartao':self.card_ID, 'senha':password, 'codigoBarras':barcode}}
-		r = requests.post(self.site + url_cards + '/' + str(self.card_ID) + '/' + url_pay, headers=header, json=body)
+		r = requests.post(self.site + '/' + url_pay, headers=header, json=body)
+		print(r.text)
 		if r.status_code == 201:
 			return 'success'
 		else:
-			raise NameError('credit error')
+			raise NameError('pay error')
 
 class S(BaseHTTPRequestHandler):
 	def _set_headers(self):
