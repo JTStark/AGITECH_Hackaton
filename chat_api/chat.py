@@ -6,8 +6,11 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 from pymessenger import Element
 from pymessenger import Button
-import ..agitech.apiai as apiai
+import ..internal_processing.apiai as apiai
 from os import environ
+import sys
+sys.path.append('../')
+from internal_processing.apiai import apiai
 
 
 
