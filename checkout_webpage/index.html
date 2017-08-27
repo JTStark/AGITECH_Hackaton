@@ -73,6 +73,7 @@
         var url = url1.concat(callId, url2);
         //httpGetAsync(url);
         sendPayment(payment);
+        window.location = "http://www.students.ic.unicamp.br/~ra158044/success.html";
       });
       V.on("payment.cancel", function(payment){
         console.log('Pagamento cancelado.');
