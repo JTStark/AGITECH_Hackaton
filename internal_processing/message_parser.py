@@ -1,4 +1,4 @@
-from .server import *
+from server import *
 import ast
 
 db = Data_base(db_folder + db_name)
@@ -74,8 +74,8 @@ def receive_message(userId, message):
 			return 'Seu saldo equivale a R$' + str(balance)	+ '\n\nCaso queira fazer alguma outra operacao, fale comigo!'
 		elif(status == 'transf3'):
 			initialize_payment_interface(userId, operacao['valor'])
-            json = requests.get('https://www.ic.unicamp.br/~ra158044/')
-            user.card.credit(float(operacao['valor']))
+			json = requests.get('https://www.ic.unicamp.br/~ra158044/')
+			user.card.credit(float(operacao['valor']))
 		return operacao
 
 print(receive_message(1236, 'Joao'))
