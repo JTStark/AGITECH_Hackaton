@@ -22,7 +22,7 @@ def hello():
 
     if request.method == 'GET':
         print("GOT A GET!!!")
-        print(request.args)
+        print(request.args.get("source"))
         #if request.args.get("hub.verify_token") == VERIFY_TOKEN:
         #    return request.args.get("hub.challenge")
         #else:
