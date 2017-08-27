@@ -7,6 +7,9 @@ from pymessenger.bot import Bot
 from pymessenger import Element
 from pymessenger import Button
 from os import environ
+import sys
+sys.path.insert(0, '../internal_processing/')
+import message_parser as parser
 
 
 app = Flask(__name__)
@@ -17,7 +20,7 @@ VERIFY_TOKEN = "test_token"
 bot = Bot(ACCESS_TOKEN)
 
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/webhook", methods=['GET', 'POST'])
 def hello():
 
 
@@ -40,7 +43,7 @@ def hello():
                     recipient_id = x['sender']['id']
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        answer = receive_message(recipient_id, message)
+                        answer = parser.receive_message(recipient_id, message)
                         bot.send_text_message(recipient_id, answer)
                 else:
                     pass
