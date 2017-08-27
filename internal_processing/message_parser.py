@@ -47,7 +47,7 @@ def receive_message(userId, message):
 		return 'Mandar para quem?'
 	elif(status == 'transf2'):
 		try:
-			get_child_by_name(idUser, message)
+			db.get_child_by_name(userId, message)
 		except:
 			return 'Nome não encontrado. Por gentileza, digite o nome corretamente. Pode ser também que você não tenha dependentes, então use cancelar para parar o procedimento atual.'
 		db.set_user_state(userId, 'transf3')
@@ -70,7 +70,7 @@ def receive_message(userId, message):
 		return operacao
 
 print(receive_message(1236, 'Joao'))
-print(db.users)
+#print(db.users)
 
 
 

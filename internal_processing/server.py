@@ -26,10 +26,10 @@ user_id_not_found = 'user id not found'
 #States
 initializing_state = 'init'
 
-example_child1 = [1234, 'Guilherme', 1236, [], initializing_state, 3713100019442, '']
-example_child2 = [1235, 'Joao', 1236, [], initializing_state, 3713100019459, '']
-example_father = [1236, 'Pedro', 0, [1234,1235], initializing_state, 3713100019467, '']
-example_child_alone = [1238, 'Leonardo', 0, [], initializing_state, 3713100019475, '']
+example_child1 = [1234, 'Guilherme', 1236, [], initializing_state, 3713100019442, '{}']
+example_child2 = [1235, 'Joao', 1236, [], initializing_state, 3713100019459, '{}']
+example_father = [1236, 'Pedro', 0, [1234,1235], initializing_state, 3713100019467, '{}']
+example_child_alone = [1238, 'Leonardo', 0, [], initializing_state, 3713100019475, '{}']
 examples = [example_child1, example_child2, example_father, example_child_alone]
 
 json_example = '{\"Facebook_ID\":1232,\"name\":\"Augusto\",\"owner_ID\":333,\"childs_ID\":\"[]\", \"current_state\":\"init\"}'
@@ -85,12 +85,15 @@ class Data_base:
 				arqCsv.writerow(user)
 
 	def read(self):
-		with open(self.file_name, 'r') as arq:
-			arqCsv = csv.reader(arq)
-			next(arqCsv)
-			for user in arqCsv:
-				self.users.append(user)
-			self.users.pop(0)
+		try:
+			with open(self.file_name, 'r') as arq:
+				arqCsv = csv.reader(arq)
+				next(arqCsv)
+				for user in arqCsv:
+					self.users.append(user)
+				self.users.pop(0)
+		except:
+			self.create(examples)
 
 	def create_user(self, index):
 		user = self.users[int(index)]
@@ -365,8 +368,9 @@ db = Data_base(db_folder + db_name)
 #while True:
 #	pass
 
-user = db.create_user(2)
-user.card.pay("123123", "123312 3123123 123 123 123123")
+#user = db.create_user(2)
+#print(db.get_child_by_name(1236, 'Joao').name)
+#user.card.pay("123123", "123312 3123123 123 123 123123")
 
 #print(db.get_child_by_name(user.facebook_ID, 'joao'))
 #
