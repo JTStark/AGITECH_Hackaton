@@ -39,10 +39,12 @@ def hello():
                     recipient_id = x['sender']['id']
                     print("message2")
                     if x['message'].get('text'):
-                        raw_message = x['message']['text']
-                        message = apiai_get.parse_message(raw_message)
+                        message = x['message']['text']
                         buttons = []
-                        button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='full',webview_share_button='hide')
+                        button = Button(type='postback', title="select option 1", payload="1")
+                        #button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='full',webview_share_button='hide')
+                        buttons.append(button)
+                        button = Button(type='postback', title="select option 2", payload="2")
                         buttons.append(button)
                         text = 'Select'
                         result = bot.send_button_message(recipient_id, text, buttons)
