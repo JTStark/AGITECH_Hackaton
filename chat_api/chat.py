@@ -3,7 +3,7 @@ This bot listens to port 5002 for incoming connections from Facebook. It takes
 in any messages that the bot receives and echos it back.
 """
 from flask import Flask, request
-from pymessenger.bot import Bot
+import pymessenger
 from os import environ
 
 app = Flask(__name__)
