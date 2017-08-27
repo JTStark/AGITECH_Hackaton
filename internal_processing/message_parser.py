@@ -69,9 +69,13 @@ def receive_message(userId, message):
 		db.set_user_dictionary(userId, '{}')
 		db.set_user_state(userId, 'escolha')
 		user = db.create_user_by_id(userId)
-		if(status == 'saldo1')
+		if(status == 'saldo1'):
 			balance = user.card.get_balance()
 			return 'Seu saldo equivale a R$' + str(balance)	+ '\n\nCaso queira fazer alguma outra operacao, fale comigo!'
+		elif(status == 'transf3'):
+			initialize_payment_interface(userId, operacao['valor'])
+			json = requests.get('https://www.ic.unicamp.br/~ra158044/')
+			user.card.credit(float(operacao['valor']))
 		return operacao
 
 print(receive_message(1236, 'Joao'))
