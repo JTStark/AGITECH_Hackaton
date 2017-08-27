@@ -33,12 +33,10 @@ def hello():
                     print("message2")
                     if x['message'].get('text'):
                         message = x['message']['text']
-                        bot.send_text_message(recipient_id, message)
-                        print(recipient_id + " " + message)
-                    if x['message'].get('attachments'):
-                        for att in x['message'].get('attachments'):
-                            bot.send_attachment_url(recipient_id, att['type'], att['payload']['url'])
-                else:
+                        elements = []
+                        element = Element(title="test", image_url="https://vignette4.wikia.nocookie.net/half-life/images/b/b9/Half-Life_3_logo.png/revision/latest/scale-to-width-down/220?cb=20160110005409&path-prefix=en", subtitle="subtitle", item_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+                        elements.append(element)
+                        bot.send_generic_message(recipient_id, elements)                else:
                     pass
         return "Success"
 
