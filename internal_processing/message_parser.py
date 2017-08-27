@@ -7,6 +7,7 @@ def receive_message(userId, message):
 	print(message)
 	userId = int(userId)
 	status = db.get_user_state(userId)
+	print('ESTATOSSSS: ' + str(status))
 	operacao = ast.literal_eval(db.get_user_dictionary(userId))
 	if(('cancelar' in message.split()) or ('cancela' in message.split())):
 		db.set_user_dictionary(userId, '{}')
