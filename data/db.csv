@@ -1,0 +1,5 @@
+Facebook_ID,Name,Owner_ID,Childs_ID,Current_state,Card_ID
+1234,Guilherme,1236,[],init,3713100019442
+1235,Joao,1236,[],init,3713100019459
+1236,Pedro,0,"[1234, 1235]",init,3713100019467
+1238,Leonardo,0,[],init,3713100019475
