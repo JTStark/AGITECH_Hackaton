@@ -8,8 +8,8 @@ from pymessenger import Element
 from pymessenger import Button
 from os import environ
 import sys
-sys.path.append('../internal_processing/')
-import message_parser as parser
+sys.path.append('../')
+import internal_processing.message_parser as parser
 
 
 app = Flask(__name__)
