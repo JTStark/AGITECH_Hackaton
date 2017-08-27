@@ -80,7 +80,7 @@ def receive_message(userId, message):
 	elif(status in ['saldo1', 'receber2', 'boleto2', 'transf3', 'extrato2']):
 		db.set_user_dictionary(userId, '{}')
 		db.set_user_state(userId, 'escolha')
-		user = db.create_user_by_id(userId)
+		user = db.create_user(userId)
 		if(status == 'saldo1'):
 			balance = user.card.get_balance()
 			return 'Seu saldo equivale a R$' + str(balance)	+ '\n\nCaso queira fazer alguma outra operacao, fale comigo!'
@@ -90,7 +90,6 @@ def receive_message(userId, message):
 			user.card.credit(float(operacao['valor']))
 		return operacao
 
-print(receive_message(1236, 'Joao'))
 #print(db.users)
 
 
