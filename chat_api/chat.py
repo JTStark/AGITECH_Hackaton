@@ -6,7 +6,7 @@ from flask import Flask, request
 from pymessenger.bot import Bot
 from pymessenger import Element
 from pymessenger import Button
-import apiai
+import agitech.apiai as apiai
 from os import environ
 
 
