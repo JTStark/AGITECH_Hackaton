@@ -1,0 +1,54 @@
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Visa Checkout</title>
+
+  <style>
+    body { color: black; background: lightblue; }
+  </style>
+
+  <script type="text/javascript">
+    //funcao retirada de:
+    //https://stackoverflow.com/questions/814613/how-to-read-get-data-from-a-url-using-javascript
+    function $_GET(q,s) {
+      s = (s) ? s : window.location.search;
+      var re = new RegExp('&amp;'+q+'=([^&amp;]*)','i');
+      return (s=s.replace(/^\?/,'&amp;').match(re)) ?s=s[1] :s='';
+    }
+    var value = $_GET('value');
+
+    function onVisaCheckoutReady (){
+      V.init({
+        apikey: "DCGBG5ODPOAZ0MXAAIWV21JFYg6AJ3P1bCp-9DcqRUzf-kYHI",
+        paymentRequest:{
+          currencyCode: "BRL",
+          total: value
+        }
+      });
+      V.on("payment.success", function(payment){
+        console.log(JSON.stringify(payment));
+        //sendPayment()
+      });
+      V.on("payment.cancel", function(payment){
+        console.log('Pagamento cancelado.');
+        //sendPayment()
+      });
+      V.on("payment.error", function(payment, error){
+        console.log('Erro ao realizar pagamento.');
+        //sendPayment()
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <center>
+  <img alt="Visa Checkout" class="v-button" role="button"
+     src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png"/>
+  <script type="text/javascript"
+     src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">
+  </script>
+  </center>
+</body>
+</html>

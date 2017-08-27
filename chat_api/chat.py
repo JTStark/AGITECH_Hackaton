@@ -5,7 +5,9 @@ in any messages that the bot receives and echos it back.
 from flask import Flask, request
 from pymessenger.bot import Bot
 from pymessenger import Element
+from pymessenger import Button
 from os import environ
+
 
 app = Flask(__name__)
 
@@ -32,14 +34,15 @@ def hello():
                 if x.get('message'):
                     recipient_id = x['sender']['id']
                     print("message2")
-                    if x['message'].get('text'):
-                        message = x['message']['text']
-                        elements = []
-                        element = Element(title="test", image_url="https://vignette4.wikia.nocookie.net/half-life/images/b/b9/Half-Life_3_logo.png/revision/latest/scale-to-width-down/220?cb=20160110005409&path-prefix=en", subtitle="subtitle", item_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-                        elements.append(element)
-                        bot.send_generic_message(recipient_id, elements)
-                    else:
-                        pass
+                    #if x['message'].get('text'):
+                    message = x['message']['text']
+                    buttons = []
+                    button = Button(type='web_url', url='http://www.students.ic.unicamp.br/~ra158044/visa_checkout.html?value=50', title='Button', webview_height_ratio='tall',webview_share_button='hide')
+                    buttons.append(button)
+                    text = 'Select'
+                    result = bot.send_button_message(recipient_id, text, buttons)
+                    #else:
+                    #    pass
         return "Success"
 
 
