@@ -46,11 +46,7 @@ def receive_message(userId, message):
 			db.set_user_dictionary(userId, str(operacao))
 			print('ELE CHAMOU 4')
 			return 'Digite o código do boleto que quer pagar.'
-		else:
-			db.set_user_state(userId, 'receber1')
-			operacao['op'] = 'receber'
-			db.set_user_dictionary(userId, str(operacao))
-			return 'Quanto quer pedir para o responsável?'
+		
 	elif(status == 'transf1'):
 		if(message is not int):
 			return 'Desculpe, acho que você digitou errado. Diga novamente o valor que deseja transferir.'
