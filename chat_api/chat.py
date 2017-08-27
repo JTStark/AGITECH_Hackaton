@@ -9,6 +9,7 @@ from pymessenger import Button
 from os import environ
 import sys
 sys.path.append('../')
+sys.path.append('../internal_processing')
 import internal_processing.message_parser as parser
 
 
